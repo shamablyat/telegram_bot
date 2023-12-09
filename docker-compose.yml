@@ -28,7 +28,7 @@ services:
       # access the API on 8081 port
       - 8083:8081
 
- aiogram-telegram-bot-api:
+  aiogram-telegram-bot-api:
      image: aiogram/telegram-bot-api:latest
      environment:
        TELEGRAM_API_ID: 20448273
