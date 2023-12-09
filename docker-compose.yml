@@ -3,6 +3,9 @@ version: "2"
 volumes:
   server-data:
     driver: local
+  tdlight: 
+  aiogram:
+  divideprojects:
 
 services:
   bots-house-telegram-bot-api:
@@ -33,6 +36,9 @@ services:
        TELEGRAM_LOCAL: 1
      ports:
        - 8082:8081
+     volumes:
+      # mount volume for persistance of files
+      - aiogram:/var/lib/aiogram
 
   divideprojects-telegram-bot-api:
       image: divideprojects/docker-telegram-bot-api:latest
@@ -43,6 +49,9 @@ services:
         # you can also configure other env variables here
       ports:
         - 8084:8081
+      volumes:
+      # mount volume for persistance of files
+      - divideprojects:/var/lib/divideprojects
 
   tdlight-tdlightbotapi:
     image: tdlight/tdlightbotapi:latest
@@ -50,6 +59,8 @@ services:
       TELEGRAM_API_ID: 20448273
       TELEGRAM_API_HASH: "25a0ad7791e66b9f53d79c52178ec358"
       TELEGRAM_LOCAL: 1
+      TELEGRAM_ALLOW_USERS_REGISTRATION: 1
+      TELEGRAM_ALLOW_USERS: 1
       # you can also configure other env variables here
     ports:
       - 8081:8081
@@ -57,6 +68,9 @@ services:
       kompose.controller.type: deployment
       kompose.service.type: nodeport
       kompose.service.nodeport.port: "30015"
+    volumes:
+      # mount volume for persistance of files
+      - tdlight:/var/lib/tdlight
 
   api:
     image: xtrime/telegram-api-server:latest
@@ -98,4 +112,4 @@ services:
 
 networks:
   default:
-    name: telegram-api-server
+#     name: telegram-api-server
